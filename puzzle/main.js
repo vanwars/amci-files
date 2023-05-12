@@ -1,9 +1,11 @@
 const puzzle = document.querySelector('#puzzle');
 const puzzleOrig = document.querySelector('#puzzle_orig');
 const message = document.querySelector('#message');
+const thumbs = document.querySelector('#options');
 const numSquaresW = 7;
 const numSquaresH = 7;
 const imgOriginalSize = 500;
+const scale = 1;
 let tries = 0;
 
 var img = new Image();
@@ -35,6 +37,17 @@ img.onload = function() {
     // setInterval(buildCopy, 300);
 };
 
+function loadThumbnails() {
+    images.forEach((imgURL, i) => {
+        thumbs.insertAdjacentHTML('beforeend', `
+            <img 
+                src="${imgURL}" 
+                alt="${imgURL.replace('.jpg', '')}" 
+                onclick="loadPuzzle(${i})" />`
+        )
+    })
+}
+
 function buildOriginal() {
     puzzleOrig.innerHTML = '';
     const pieceSizeW = imgOriginalSize / numSquaresW;
@@ -51,8 +64,8 @@ function buildOriginal() {
             piece = `
                 <canvas 
                     id=${canvasID} 
-                    width="${pieceSizeW}" 
-                    height="${pieceSizeH}"></canvas>`;
+                    width="${pieceSizeW * scale}" 
+                    height="${pieceSizeH * scale}"></canvas>`;
             
             // 3. add it to the DOM:
             puzzleOrig.insertAdjacentHTML('beforeend', piece);
@@ -62,7 +75,7 @@ function buildOriginal() {
             const ctx = canvas.getContext('2d');
 
             // console.log("Drawing a slice of the image on this little 100x100 canvas element: (", x, ",", y, ")");
-            ctx.drawImage(img, x, y, pieceSizeW, pieceSizeH, 0, 0, pieceSizeW, pieceSizeH);
+            ctx.drawImage(img, x, y, pieceSizeW, pieceSizeH, 0, 0, pieceSizeW * scale, pieceSizeH * scale);
         }
     }
 }
@@ -173,7 +186,14 @@ function initApp () {
     initCSS(puzzleOrig, numSquaresW, numSquaresH);
     initCSS(puzzle, numSquaresW, numSquaresH);
 
+    loadThumbnails();
+
     message.innerHTML = '&nbsp;';
+}
+
+function loadPuzzle(i) {
+    img.src = images[i]; 
+    buildPuzzles();
 }
 
 initApp();
