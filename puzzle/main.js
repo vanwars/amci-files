@@ -192,6 +192,8 @@ function initApp () {
 }
 
 function loadPuzzle(i) {
+    message.innerHTML = '&nbsp;';
+    tries = 0;
     img.src = images[i]; 
     buildPuzzles();
 }
