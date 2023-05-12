@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+}
+
+main {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    column-gap: 20px;
+}
+
+p {
+    grid-column: 1 / span 2;
+}
+
+.piece-holder {
+    /* border: solid 1px #000; */
+    display: flex;
+}
