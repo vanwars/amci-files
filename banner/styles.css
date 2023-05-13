@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+}
+
+body * {
+    box-sizing: border-box;
+}
+
+main {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 230px auto;
+    align-items: flex-start;
+}
+
+#options {
+    background-color: #F0F0F0;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 10px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#options img {
+    width: 100px;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: flex-start;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+p {
+    grid-column: 1 / span 2;
+}
+
+.piece-holder {
+    /* border: solid 1px #000; */
+    display: flex;
+}
+
+@media screen and (max-width: 800px) {
+    main {
+        display: grid;
+        height: 100vh;
+        grid-template-columns: auto;
+        align-items: flex-start;
+    }
+
+    #puzzle_orig, #options {
+        display: none !important;
+    }
+}
