@@ -2,7 +2,7 @@ const puzzle = document.querySelector('#puzzle');
 const puzzleOrig = document.querySelector('#puzzle_orig');
 const message = document.querySelector('#message');
 const thumbs = document.querySelector('#options');
-const numSquaresW = 12;
+const numSquaresW = 30;
 const numSquaresH = numSquaresW;
 const imgOriginalSize = 500;
 const scale = 1;
@@ -34,7 +34,7 @@ const images = [
 // the number of squares you want:
 img.onload = function() {
     buildPuzzles();
-    setInterval(shuffleIfNotInCorrectPlace, 50);
+    // setInterval(shuffleIfNotInCorrectPlace, 50);
 };
 
 function loadThumbnails() {
@@ -61,9 +61,13 @@ function buildOriginal() {
 
             // 2. create a new canvas tag to hold the puzzle piece:
             const canvasID = `c_${col}_${row}`;
+            const delay = `${row*.05 + col * 0.05}s`;
+            console.log(delay);
+            // canvas.style.animation = `fisheye ${delay} infinite`;
             piece = `
                 <canvas 
                     id=${canvasID} 
+                    style="animation: fisheye 3s; animation-delay: ${delay}"
                     width="${pieceSizeW * scale}" 
                     height="${pieceSizeH * scale}"></canvas>`;
             
@@ -76,6 +80,8 @@ function buildOriginal() {
 
             // console.log("Drawing a slice of the image on this little 100x100 canvas element: (", x, ",", y, ")");
             ctx.drawImage(img, x, y, pieceSizeW, pieceSizeH, 0, 0, pieceSizeW * scale, pieceSizeH * scale);
+            // const delay = `{col * .100}s`;
+            // canvas.style.animation = `fisheye ${delay} infinite`;
         }
     }
 }
@@ -240,6 +246,7 @@ function initApp () {
 
     const i = getRandomInt(images.length);
     img.src = images[i]; 
+    img.src = "images/mountains.png"
 
     // init CSS Grids:
     initCSS(puzzleOrig, numSquaresW, numSquaresH);

@@ -1,0 +1,146 @@
+body * {
+    box-sizing: border-box;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    background-color: hotpink;
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+    border: solid purple 2px;
+}
+
+#restart {
+    position: fixed;
+    top: 50vh;
+    left: 40vw;
+    width: 20%;
+    height: 15%;
+}
+
+.piece-holder {
+    border: solid 1px #000;
+    display: flex;
+}
+
+aside {
+    position: absolute;
+    top: 2vh;
+    left: 1vw;
+    max-width: 8vw;
+    max-height: 30vh;
+    background-color: #438aed;
+    border: solid hotpink 3px;
+    font-size: 3rem;
+    color: #fff;
+    text-align: center;
+}
+
+#score,
+#timer {
+    border: none;
+}
+
+h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
+    color: #000;
+}
+
+#message {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 6em;
+    text-align: center;
+    color: green;
+    /* animation properties */
+    animation-iteration-count: 1;
+    animation-duration: 2s;
+    animation-name: bounceIn;
+    /* animation-delay: 0s; */
+    /* shorthand syntax */
+    /* animation: [animation-name] [animation-duration] [animation-timingfunction] [animation-delay]; */
+    /* animation: bounceIn 2s ease-in-out; */
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+#imageLoader {
+    position: fixed;
+    top: 0vh;
+    left: 75vw;
+}
+
+.open {
+    position: fixed;
+    top: 35vh;
+    left: 1.5vw;
+    width: 7vw;
+    height: 7vh;
+}
+
+.modal-bg {
+    background: rgba(50, 50, 50, 0.8);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.close {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    background: transparent;
+    border: 0;
+    font-size: 80px;
+    text-shadow: 0px 0px 3px #000;
+    color: white;
+    line-height: 0.8em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.modal-body {
+    align-items: center;
+    height: 90vh;
+}
+
+.modal-body img {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}

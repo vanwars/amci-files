@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
+    <title>Puzzle + Image Slicing</title>
+</head>
+
+<body>
+    <input type="file" id="imageLoader" onchange="userChoice(event)" />
+    <div class="modal-bg hidden" aria-hidden="true" role="dialog">
+        <section class="modal">
+            <button class="close" aria-label="Close the modal window" onclick="closeModal();">&times;</button>
+            <div class="modal-body">
+                <!-- Image goes here -->
+            </div>
+        </section>
+    </div>
+    <main>
+        <aside>
+            <h2>SCORE</h2>
+            <section id="score"></section>
+            <h2>TIME</h2>
+            <section id="timer"></section>
+            <button class="open" onclick="showModalWithImage ()">Hint</button>
+        </aside>
+        <div id="puzzle"></div>
+    </main>
+</body>
+
+</html>

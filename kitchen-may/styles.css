@@ -1,0 +1,71 @@
+body * {
+    box-sizing: border-box;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.piece-holder {
+    border: solid 1px #000;
+    display: flex;
+}
+
+aside {
+    position: absolute;
+    top: 2vh;
+    left: 1vw;
+    max-width: 8vw;
+    max-height: 30vh;
+    background-color: #438aed;
+    border: solid hotpink 3px;
+    font-size: 3rem;
+    color: #fff;
+    text-align: center;
+}
+
+#score,
+#timer {
+    border: none;
+}
+
+h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
+    color: #000;
+}
+
+#message {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 6em;
+    text-align: center;
+    color: green;
+    /* animation properties */
+    animation-iteration-count: 1;
+    animation-duration: 2s;
+    animation-name: bounceIn;
+    /* animation-delay: 0s; */
+    /* shorthand syntax */
+    /* animation: [animation-name] [animation-duration] [animation-timingfunction] [animation-delay]; */
+    /* animation: bounceIn 2s ease-in-out; */
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
