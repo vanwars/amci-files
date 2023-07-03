@@ -1,40 +1,41 @@
 const piclist = [
-    'images/barrel.jpg',
-    'images/bike.jpg',
-    'images/buildings.jpg',
-    'images/cactus.jpg',
-    'images/city.jpg',
-    'images/drops.jpg',
-    'images/feet.jpg',
-    'images/fence.jpg',
-    'images/flowers.jpg',
-    'images/grapes.jpg',
-    'images/labrador.jpg',
-    'images/plant-water.jpg',
-    'images/stuff.jpg',
-    'images/tracks.jpg',
-    'images/trees.jpg',
-    'images/truck.jpg',
-    'images/van.jpg',
-    'images/boat_h.jpg',
-    'images/canoe_h.jpg',
-    'images/field_h.jpg',
-    'images/field_v.jpg',
-    'images/flowers_h.jpg',
-    'images/flowers_peach_h.jpg',
-    'images/flowers_v.jpg',
-    'images/mountain-landscape.jpg',
-    'images/rail_h.jpg',
-    'images/rail_v.jpg',
-    'images/two-cars.jpg',
-    'images/typewriter_h.jpg'
+    "images/barrel.jpg",
+    "images/bike.jpg",
+    "images/buildings.jpg",
+    "images/cactus.jpg",
+    "images/city.jpg",
+    "images/drops.jpg",
+    "images/feet.jpg",
+    "images/fence.jpg",
+    "images/flowers.jpg",
+    "images/grapes.jpg",
+    "images/labrador.jpg",
+    "images/plant-water.jpg",
+    "images/stuff.jpg",
+    "images/tracks.jpg",
+    "images/trees.jpg",
+    "images/truck.jpg",
+    "images/van.jpg",
+    "images/boat_h.jpg",
+    "images/canoe_h.jpg",
+    "images/field_h.jpg",
+    "images/field_v.jpg",
+    "images/flowers_h.jpg",
+    "images/flowers_peach_h.jpg",
+    "images/flowers_v.jpg",
+    "images/mountain-landscape.jpg",
+    "images/rail_h.jpg",
+    "images/rail_v.jpg",
+    "images/two-cars.jpg",
+    "images/typewriter_h.jpg",
 ];
 const puzzle = document.querySelector("#puzzle");
 let originalImage = [];
 let bgcolor = (document.querySelector("body").style.backgroundColor =
     getBackgroundColor());
 let score = 0;
-let stopClock = false;
+// convert to a global variable so that you can clear it from anywhere in your code.
+let gameTimer;
 let oMinutes = 5,
     oSeconds = 1;
 let pic = parseInt(Math.random() * piclist.length);
@@ -59,9 +60,15 @@ function makePuzzle() {
     // reset the puzzle dimensions:
     imgOriginalWidth = img.width;
     imgOriginalHeight = img.height;
+
+     // change maxwidth and maxheightt depending on the size of the puzzle you want:
+    let maxWidth = 800;
+    let maxHeight = 500;
+    const scaleFactor = Math.min(maxHeight/imgOriginalHeight, maxWidth/imgOriginalWidth);
     // recalculate the width of the pieces:
-    pieceWidth = parseInt(imgOriginalWidth / numSquares);
-    pieceHeight = parseInt(imgOriginalHeight / numSquares);
+    let pieceWidth = parseInt(imgOriginalWidth / numSquares);
+    let pieceHeight = parseInt(imgOriginalHeight / numSquares);
+
     // invoke the set up function:
     initCSS(puzzle, numSquares);
     for (let col = 0; col < numSquares; col++) {
@@ -72,17 +79,17 @@ function makePuzzle() {
             // 2. create a new canvas tag to hold the puzzle piece:
             const canvasID = `c_${col}${row}`;
             let piece = `
-<div class="piece-holder"
-style="width:${pieceWidth}; height:${pieceHeight};"
-ondrop="drop(event)" ondragover="allowDrop(event)">
-<canvas
-id=${canvasID}
-width="${pieceWidth}"
-height="${pieceHeight}"
-draggable="true"
-ondragstart="drag(event)"></canvas>
-</div>
-`;
+                <div class="piece-holder"
+                    style="width:${pieceWidth * scaleFactor}; height:${pieceHeight * scaleFactor};"
+                    ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <canvas
+                    id=${canvasID}
+                    width="${pieceWidth * scaleFactor}"
+                    height="${pieceHeight * scaleFactor}"
+                    draggable="true"
+                    ondragstart="drag(event)"></canvas>
+                    </div>
+                    `;
             // 3. add it to the DOM:
             puzzle.insertAdjacentHTML("beforeend", piece);
             // 4. draw the slice on the appropriate canvas element:
@@ -96,8 +103,8 @@ ondragstart="drag(event)"></canvas>
                 pieceHeight,
                 0,
                 0,
-                pieceWidth,
-                pieceHeight
+                pieceWidth * scaleFactor,  // scale it down to fit the screen
+                pieceHeight * scaleFactor // scale it down to fit the screen
             );
             originalImage.push(canvasID);
         }
@@ -106,7 +113,7 @@ ondragstart="drag(event)"></canvas>
     // shuffle them:
     shuffle();
     document.querySelector("#score").innerHTML = score;
-    clock();
+    startClock();
 }
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -142,11 +149,20 @@ function initCSS2(container) {
     container.style.justifyContent = "center";
     container.style.border = "none";
 }
-function clock() {
+
+function stopClock() {
+    clearInterval(gameTimer);
+    oMinutes = 5;
+    oSeconds = 1;
+
+}
+function startClock() {
     document.querySelector("#timer").innerHTML = "";
     let minutes = oMinutes,
         seconds = oSeconds;
-    let gameTime = setInterval(() => {
+    
+    // convert gameTimer to a global variable so that you can clear it if needed:
+    gameTimer = setInterval(() => {
         seconds--;
         if (seconds == 0 && minutes > 0) {
             minutes--;
@@ -164,9 +180,10 @@ function clock() {
         }
         if (minutes < 1 && seconds < 1) {
             //This stops the clock on a lose.
-            setTimeout(() => {
-                clearInterval(gameTime);
-            });
+            // setTimeout(() => {
+            //     clearInterval(gameTimer);
+            // });
+            stopClock();
             lose();
         }
         //This stops the clock on a win
@@ -174,17 +191,11 @@ function clock() {
             document.querySelector("#puzzle").innerHTML ==
             `<img src="${img.src}">`
         ) {
-            setTimeout(() => {
-                clearInterval(gameTime);
-            });
+            // setTimeout(() => {
+            //     clearInterval(gameTimer);
+            // });
+            stopClock();
             makeNewPuzzle();
-        }
-        //This stops the clock when the user chooses their own image:
-        if (stopClock == true) {
-            setTimeout(() => {
-                clearInterval(gameTime);
-            });
-            stopClock = false;
         }
     }, 1000);
 }
@@ -257,8 +268,8 @@ function drop(ev) {
 }
 // new code:
 function userChoice(ev) {
-    //set global variable to true:
-    stopClock = true;
+    // stop the clock:
+    stopClock();
     var reader = new FileReader();
     reader.readAsDataURL(ev.target.files[0]);
     reader.onload = function (event) {
